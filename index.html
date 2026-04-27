@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, My Love</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blush: #f8e1e7;
+            --rose-gold: #b76e79;
+            --cream: #fffaf0;
+            --lavender: #e6e6fa;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--cream);
+            color: #4a4a4a;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .cursive {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        .petal {
+            position: fixed;
+            top: 100vh;
+            pointer-events: none;
+            z-index: 99;
+            animation: float linear infinite;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Envelope Styles */
+        .envelope-wrapper {
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .envelope {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background: #fdf2f2;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.6s;
+            margin: 0 auto;
+        }
+
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 100px solid var(--rose-gold);
+            z-index: 2;
+            transition: transform 0.6s, z-index 0.6s;
+            transform-origin: top;
+        }
+
+        .envelope.open::before {
+            transform: rotateX(180deg);
+            z-index: 0;
+        }
+
+        .letter {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 280px;
+            height: 180px;
+            background: white;
+            z-index: 1;
+            transition: transform 0.6s;
+            padding: 20px;
+            font-size: 14px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .envelope.open .letter {
+            transform: translateY(-100px);
+            height: auto;
+            min-height: 250px;
+            z-index: 3;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--cream); }
+        ::-webkit-scrollbar-thumb { background: var(--rose-gold); border-radius: 10px; }
+
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(180deg, rgba(255,250,240,0) 0%, rgba(255,250,240,1) 100%);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <audio id="bgMusic" loop>
+    <source src="song.mp3" type="audio/mpeg">
+</audio>
+    <audio id="bgMusic" loop>
+    <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+    <!-- Floating Petals Container -->
+    <div id="petals-container"></div>
+
+    <!-- Music Button -->
+    <button id="musicToggle" class="fixed top-6 right-6 z-[100] p-3 rounded-full bg-white/80 shadow-lg hover:bg-white transition-all text-rose-400">
+        <svg id="musicIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+    </button>
+
+    <!-- SECTION 1: HERO -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <!-- Replace this Image 1 (Hero) -->
+            <img src="echy6.jpeg" alt="Hero" class="w-full h-full object-cover opacity-60">
+            <div class="absolute inset-0 hero-gradient"></div>
+        </div>
+        
+        <div class="relative z-10 text-center px-4">
+            <span class="text-rose-400 font-medium tracking-widest uppercase mb-4 block fade-in">Happy Birthday</span>
+            <h1 class="text-6xl md:text-8xl text-gray-800 mb-6 fade-in">To My Pretty<br><span class="cursive text-rose-500">Girlfriend</span></h1>
+            <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto italic fade-in">
+                "Every day with you is a gift, but today is extra special because it's all about you."
+            </p>
+            <div class="mt-12 fade-in">
+                <a href="#journey" class="px-8 py-3 rounded-full bg-[#b76e79] text-white hover:bg-[#a05d68] transition-all shadow-md">Start the Journey</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: THE JOURNEY -->
+    <section id="journey" class="py-24 px-6 md:px-12 bg-white">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl text-gray-800 mb-4">The Journey I've Seen</h2>
+                <div class="w-24 h-1 bg-rose-200 mx-auto"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center mb-20">
+                <div class="fade-in">
+                    <p class="text-lg leading-relaxed text-gray-700 mb-6">
+                        I have known you for over one year, and I’m confident to say I know you better than you know yourself. 
+                    </p>
+                    <p class="text-lg leading-relaxed text-gray-700 italic">
+                        "I’ve seen all the phases of your growth—from the moments you felt like you couldn't breathe under the weight of missing your mom, to the random tears wishing she was here to guide you."
+                    </p>
+                </div>
+                <div class="fade-in rounded-2xl overflow-hidden shadow-2xl rotate-2">
+                    <!-- Replace this Image 2 (Favorite Memory) -->
+                    <img src="echy2.jpeg" alt="Memory">
+                </div>
+            </div>
+
+            <div class="bg-rose-50 p-8 rounded-3xl border border-rose-100 fade-in">
+                <p class="text-center text-xl italic text-rose-700 leading-relaxed">
+                    "I’m glad that over the past year you’ve managed to overcome those feelings and are able to maneuver life slowly on your own. I'm so happy to have been with you during this journey and glad to have helped even in the littlest way possible."
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: HOW PROUD I AM -->
+    <section class="py-24 bg-pink-50/50">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="w-full md:w-1/2 fade-in order-2 md:order-1">
+                    <!-- Replace this Image 3 (Cute Portrait) -->
+                    <img src="echy6.jpeg" alt="Pride" class="rounded-3xl shadow-xl">
+                </div>
+                <div class="w-full md:w-1/2 fade-in order-1 md:order-2">
+                    <h2 class="text-4xl md:text-5xl text-gray-800 mb-6">How Proud I Am of You</h2>
+                    <p class="text-xl leading-relaxed text-gray-700 mb-8">
+                        I have seen you achieve a lot at a young age and I can never stop saying how proud I am of you. 
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4">
+                            <span class="text-2xl text-rose-400">✨</span>
+                            <p class="text-lg">I know you will eventually make it in life and achieve all the great things you have in your head.</p>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <span class="text-2xl text-rose-400">🤝</span>
+                            <p class="text-lg">I will be forever here to be your accountability partner and can’t wait to witness it all happen.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: YOUR BEAUTIFUL DREAMS -->
+    <section class="py-24 bg-white relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl text-gray-800 mb-4">Your Beautiful Dreams</h2>
+                <p class="text-gray-500 cursive text-2xl">Things I love to hear you say...</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Dream 1 -->
+                <div class="glass-card p-8 rounded-2xl text-center hover:-translate-y-2 transition-all fade-in">
+                    <div class="text-4xl mb-4">💅</div>
+                    <h3 class="text-2xl mb-4 text-rose-600">"I want to become a baddie"</h3>
+                    <p class="text-gray-600 italic">"I love the enthusiasm in your face when you say this..."</p>
+                </div>
+                <!-- Dream 2 -->
+                <div class="glass-card p-8 rounded-2xl text-center hover:-translate-y-2 transition-all fade-in" style="transition-delay: 0.2s;">
+                    <div class="text-4xl mb-4">🗼</div>
+                    <h3 class="text-2xl mb-4 text-rose-600">"Travel to Paris"</h3>
+                    <p class="text-gray-600 italic">"Just because I can... I can't wait to see your picture smilling infront of the Eiffel tower."</p>
+                </div>
+                <!-- Dream 3 -->
+                <div class="glass-card p-8 rounded-2xl text-center hover:-translate-y-2 transition-all fade-in" style="transition-delay: 0.4s;">
+                    <div class="text-4xl mb-4">💎</div>
+                    <h3 class="text-2xl mb-4 text-rose-600">"Swarovski Jewelry"</h3>
+                    <p class="text-gray-600 italic">"Can't forget the passion in your eyes when you specifically pointed put this as the jewlery you love."</p>
+                </div>
+            </div>
+
+            <div class="mt-16 text-center max-w-2xl mx-auto fade-in">
+                <p class="text-xl leading-relaxed text-gray-700 italic">
+                    "I love to see that smile on your face when that time comes. I know all these will be possible, and it’s just a matter of time."
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: EVERYTHING YOU DESERVE -->
+    <section class="py-24 bg-rose-50 parallax-bg" style="background-image: url('https://www.transparenttextures.com/patterns/cubes.png');">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="fade-in mb-12">
+                <h2 class="text-4xl md:text-5xl text-gray-800 mb-8">Everything You Deserve</h2>
+                <div class="relative w-full h-[400px] rounded-3xl overflow-hidden shadow-2xl mb-12">
+                    <!-- Replace this Image 4 (Us Together) -->
+                    <img src="echy4.jpeg" alt="Us" class="w-full h-full object-cover">
+                </div>
+                <p class="text-2xl leading-relaxed text-gray-800">
+                    "You’re such a nice, cute soul, and you deserve everything nice coming your way. You are smart and very capable of achieving anything you can think of."
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: MY BIRTHDAY WISH -->
+    <section class="py-24 bg-white">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-4xl md:text-5xl text-gray-800 mb-12">Tap the envelope to read your letter</h2>
+            
+            <div class="envelope-wrapper fade-in" onclick="toggleEnvelope(this)">
+                <div class="envelope" id="mainEnvelope">
+                    <div class="letter">
+                        <div>
+                            <p class="text-rose-600 font-bold text-xl mb-4">Happy Birthday, Love!</p>
+                            <p class="text-gray-700 leading-relaxed">
+                                Lastly, I’d like to wish you the happiest birthday to the most amazing soul to ever grace my life. Proud of the big girl you are becoming and the bright future that is coming your way.
+                            </p>
+                            <p class="cursive text-3xl mt-6 text-rose-500">Enjoy your day!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="mt-32 text-gray-400 italic"></p>
+        </div>
+    </section>
+
+    <!-- SECTION 7: I LOVE YOU ALWAYS -->
+    <footer class="py-24 bg-[#b76e79] text-white text-center relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <!-- Replace this Image 5 (Dreams Vibe) -->
+            <img src="echy5.jpeg" alt="Future" class="w-full h-full object-cover">
+        </div>
+        <div class="relative z-10 px-6">
+            <h2 class="text-5xl md:text-7xl cursive mb-8">I Love You Always</h2>
+            <p class="text-xl md:text-2xl max-w-2xl mx-auto font-light leading-relaxed mb-12">
+                "My cutie patootie, I love you, and that will never change!"
+            </p>
+            <div class="flex justify-center gap-4 mb-12">
+                <span class="text-4xl animate-bounce">💖</span>
+                <span class="text-4xl animate-bounce" style="animation-delay: 0.2s;">🎂</span>
+                <span class="text-4xl animate-bounce" style="animation-delay: 0.4s;">🌹</span>
+            </div>
+            <p class="text-sm tracking-widest uppercase opacity-75">Forever Yours</p>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Floating Petals Logic
+        const petalsContainer = document.getElementById('petals-container');
+        const petalIcons = ['🌸', '💖', '✨', '🎈', '🌹'];
+
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            petal.innerHTML = petalIcons[Math.floor(Math.random() * petalIcons.length)];
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            petal.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            petal.style.opacity = Math.random();
+            
+            petalsContainer.appendChild(petal);
+
+            setTimeout(() => {
+                petal.remove();
+            }, 10000);
+        }
+
+        setInterval(createPetal, 300);
+
+        // Envelope Interaction
+        function toggleEnvelope(wrapper) {
+            const env = wrapper.querySelector('.envelope');
+            env.classList.toggle('open');
+        }
+
+        // Simple Audio Toggle (UI only for demonstration, could link to a real source)
+        let isPlaying = false;
+        const musicBtn = document.getElementById('musicToggle');
+        const musicIcon = document.getElementById('musicIcon');
+        
+        musicBtn.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            if(isPlaying) {
+                musicBtn.classList.add('bg-rose-100');
+                musicIcon.innerHTML = '<path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>';
+                // Note: To add actual music, initialize an Audio object here
+                // const audio = new Audio('your-music-url.mp3'); audio.play();
+            } else {
+                musicBtn.classList.remove('bg-rose-100');
+                musicIcon.innerHTML = '<path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle>';
+            }
+        });
+
+        // Smooth Scroll handling for the initial button
+        document.querySelector('a[href^="#"]').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+        const audio = document.getElementById("bgMusic");
+
+// Play music on first click anywhere
+document.addEventListener("click", () => {
+    if (audio.paused) {
+        audio.play();
+    }
+});
+    </script>
+</body>
+</html>
